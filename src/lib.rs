@@ -42,3 +42,18 @@
 //! [rokkakari_puzzle]: https://www.janko.at/Raetsel/Varianten/020.a.htm
 //! [rokkakari_demo]: https://jimgerth.herokuapp.com/akari
 //! [github_repo]: https://github.com/JimGerth/rokkakari
+
+mod board;
+mod cell;
+
+#[cfg(test)]
+mod tests {
+
+    use super::cell;
+
+    #[test]
+    fn it_works() {
+        let cell = cell::Cell::Blocked(cell::blocked::BlockedCell::Constrained(2));
+        assert_eq!(2 + 2, 4);
+    }
+}
