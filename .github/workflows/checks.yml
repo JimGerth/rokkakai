@@ -35,4 +35,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Lint
-      run: cargo clean && cargo clippy --all-targets --all-features -- -D warnings -D clippy::unimplemented -D clippy::missing_docs_in_private_items
+      run: cargo clean && cargo clippy --all-targets --all-features -- -D warnings -D clippy::unimplemented -D clippy::missing_docs_in_private_items -A dead-code
