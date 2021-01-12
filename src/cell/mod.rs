@@ -57,7 +57,9 @@
 // Exported Types
 pub use self::free::{Marking, State as FreeState};
 pub use self::side::Side;
+pub use self::wall::{Constraint, State as WallState};
 
 // Internal Modules
 mod free;
 mod side;
+mod wall;
