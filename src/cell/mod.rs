@@ -53,3 +53,9 @@
 //!
 //! [constraint]: crate::cell::Constraint
 //! [akari]: https://en.wikipedia.org/wiki/Light_Up_(puzzle)
+
+// Exported Types
+pub use self::side::Side;
+
+// Internal Modules
+mod side;
