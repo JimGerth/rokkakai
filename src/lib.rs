@@ -42,3 +42,5 @@
 //! [rokkakari_puzzle]: https://www.janko.at/Raetsel/Varianten/020.a.htm
 //! [rokkakari_demo]: https://jimgerth.herokuapp.com/akari
 //! [github_repo]: https://github.com/JimGerth/rokkakari
+
+pub mod cell;
