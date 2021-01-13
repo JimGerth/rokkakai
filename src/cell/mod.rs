@@ -55,11 +55,14 @@
 //! [akari]: https://en.wikipedia.org/wiki/Light_Up_(puzzle)
 
 // Exported Types
+pub use self::cell::Cell;
 pub use self::free::{Marking, State as FreeState};
 pub use self::side::Side;
 pub use self::wall::{Constraint, State as WallState};
 
 // Internal Modules
+#[allow(clippy::module_inception)]
+mod cell;
 mod free;
 mod side;
 mod wall;
