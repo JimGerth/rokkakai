@@ -44,6 +44,21 @@ pub struct State {
     lit_from_f: bool,
 }
 
+impl Default for State {
+    /// Returns the state of an empty unilluminated free cell.
+    fn default() -> Self {
+        Self {
+            marking: None,
+            lit_from_a: false,
+            lit_from_b: false,
+            lit_from_c: false,
+            lit_from_d: false,
+            lit_from_e: false,
+            lit_from_f: false,
+        }
+    }
+}
+
 /// The possible markings for *free* cells.
 ///
 /// See [the module level documentation for more][cell_module_at_free_cells].

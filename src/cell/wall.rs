@@ -39,3 +39,17 @@ pub enum Constraint {
     /// `0` and `3` (inclusive).
     Equal(u8),
 }
+
+impl Default for State {
+    /// Returns the state of an unconstrained wall cell.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::WallState;
+    /// assert_eq!(WallState::default(), WallState::Unconstrained);
+    /// ```
+    fn default() -> Self {
+        Self::Unconstrained
+    }
+}

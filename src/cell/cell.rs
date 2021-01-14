@@ -24,3 +24,17 @@ pub enum Cell {
     /// [wall_state]: crate::cell::WallState
     Wall(WallState),
 }
+
+impl Default for Cell {
+    /// Returns an empty free cell.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Cell, FreeState};
+    /// assert_eq!(Cell::default(), Cell::Free(FreeState::default()));
+    /// ```
+    fn default() -> Self {
+        Self::Free(FreeState::default())
+    }
+}
