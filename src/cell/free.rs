@@ -1,5 +1,7 @@
 //! Internal module defining the state of a free cell.
 
+use super::side::Side;
+
 /// Represents the state of a *free* game cell.
 ///
 /// Used as the associated data in the [`Cell::Free`][free_cell] variant.
@@ -42,6 +44,22 @@ pub struct State {
     lit_from_e: bool,
     #[allow(clippy::missing_docs_in_private_items)]
     lit_from_f: bool,
+}
+
+impl State {
+    /// Returns wether this cell is lit up from the given [`Side`][side].
+    ///
+    /// [side]: crate::cell::Side
+    pub fn is_lit_from(&self, side: Side) -> bool {
+        match side {
+            Side::A => self.lit_from_a,
+            Side::B => self.lit_from_b,
+            Side::C => self.lit_from_c,
+            Side::D => self.lit_from_d,
+            Side::E => self.lit_from_e,
+            Side::F => self.lit_from_f,
+        }
+    }
 }
 
 impl Default for State {
