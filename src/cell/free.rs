@@ -60,6 +60,13 @@ impl State {
             Side::F => self.lit_from_f,
         }
     }
+
+    /// Returns wether this cell has a [`Lamp`][lamp] marking in it or not.
+    ///
+    /// [lamp]: crate::cell::Marking::Lamp
+    pub fn has_lamp(&self) -> bool {
+        matches!(self.marking, Some(Marking::Lamp))
+    }
 }
 
 impl Default for State {
