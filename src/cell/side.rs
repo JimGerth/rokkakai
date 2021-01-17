@@ -71,3 +71,32 @@ pub enum Side {
     #[allow(clippy::missing_docs_in_private_items)]
     F,
 }
+
+impl Side {
+    /// Returns the opposite of a side.
+    ///
+    /// # Examples
+    ///
+    /// As seen above, the opposite side of `A` is `D`,
+    /// the opposite side of `B` is `E`, *and so on:*
+    ///
+    /// ```
+    /// # use rokkakari::cell::Side;
+    /// assert_eq!(Side::A.opposite(), Side::D);
+    /// assert_eq!(Side::B.opposite(), Side::E);
+    /// assert_eq!(Side::C.opposite(), Side::F);
+    /// assert_eq!(Side::D.opposite(), Side::A);
+    /// assert_eq!(Side::E.opposite(), Side::B);
+    /// assert_eq!(Side::F.opposite(), Side::C);
+    /// ```
+    pub fn opposite(&self) -> Side {
+        match self {
+            Self::A => Self::D,
+            Self::B => Self::E,
+            Self::C => Self::F,
+            Self::D => Self::A,
+            Self::E => Self::B,
+            Self::F => Self::C,
+        }
+    }
+}
