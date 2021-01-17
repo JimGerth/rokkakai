@@ -1,5 +1,7 @@
 //! Internal module defining the state of a free cell.
 
+use serde::{Deserialize, Serialize};
+
 /// Represents the state of a *free* game cell.
 ///
 /// Used as the associated data in the [`Cell::Free`][free_cell] variant.
@@ -17,6 +19,7 @@
 /// [marking]: crate::cell::Marking
 /// [side]: crate::cell::Side
 /// [cell_module_at_free_cells]: crate::cell#free-cells
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub struct State {
     /// An optional [`Marking`] on the free cell.
     ///
@@ -49,7 +52,7 @@ pub struct State {
 ///
 /// [free_cell]: crate::cell::Cell::Free
 /// [cell_module_at_free_cells]: crate::cell#free-cells
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
 pub enum Marking {
     /// A *lamp* placed in a free cell lights up other free cells in every
     /// direction.
