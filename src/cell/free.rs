@@ -67,6 +67,31 @@ impl State {
     pub fn has_lamp(&self) -> bool {
         matches!(self.marking, Some(Marking::Lamp))
     }
+
+    /// Registers that a lamp lights up this cell from a given [`Side`][side].
+    ///
+    /// [side]: crate::cell::Side
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Side};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.register_light_from(Side::A);
+    ///
+    /// assert!(free_state.is_lit_from(Side::A));
+    /// ```
+    pub fn register_light_from(&mut self, side: Side) {
+        match side {
+            Side::A => self.lit_from_a = true,
+            Side::B => self.lit_from_b = true,
+            Side::C => self.lit_from_c = true,
+            Side::D => self.lit_from_d = true,
+            Side::E => self.lit_from_e = true,
+            Side::F => self.lit_from_f = true,
+        }
+    }
 }
 
 impl Default for State {
