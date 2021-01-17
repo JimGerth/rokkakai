@@ -24,7 +24,7 @@ pub struct State {
     /// An optional [`Marking`] on the free cell.
     ///
     /// [marking]: crate::cell::Marking
-    marking: Option<Marking>,
+    pub marking: Option<Marking>,
 
     /// Represent wether this cell is lit from a certain side.
     ///
@@ -33,17 +33,17 @@ pub struct State {
     /// See the [`Side`][side] type for more.
     ///
     /// [side]: crate::cell::Side
-    lit_from_a: bool,
+    pub lit_from_a: bool,
     #[allow(clippy::missing_docs_in_private_items)]
-    lit_from_b: bool,
+    pub lit_from_b: bool,
     #[allow(clippy::missing_docs_in_private_items)]
-    lit_from_c: bool,
+    pub lit_from_c: bool,
     #[allow(clippy::missing_docs_in_private_items)]
-    lit_from_d: bool,
+    pub lit_from_d: bool,
     #[allow(clippy::missing_docs_in_private_items)]
-    lit_from_e: bool,
+    pub lit_from_e: bool,
     #[allow(clippy::missing_docs_in_private_items)]
-    lit_from_f: bool,
+    pub lit_from_f: bool,
 }
 
 /// The possible markings for *free* cells.
