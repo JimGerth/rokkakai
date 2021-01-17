@@ -10,6 +10,7 @@ use super::wall::State as WallState;
 ///
 /// [cell]: crate::cell::Cell
 /// [cell_module]: crate::cell#cells
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Cell {
     /// A *free* game cell.
     /// All the free cell specific state is represented by [`FreeState`][free_state].

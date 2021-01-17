@@ -56,7 +56,7 @@
 ///          D        *        C
 ///                                                                      D
 /// ```
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Side {
     #[allow(clippy::missing_docs_in_private_items)]
     A,
