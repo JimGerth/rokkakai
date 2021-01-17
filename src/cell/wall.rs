@@ -1,5 +1,7 @@
 //! Internal module defining the state of a wall state.
 
+use serde::{Deserialize, Serialize};
+
 /// Represents the state of a *wall* game cell.
 ///
 /// Used as the associated data in the [`Cell::Wall`][wall_cell] variant.
@@ -8,6 +10,7 @@
 ///
 /// [wall_cell]: crate::cell::Cell::Wall
 /// [cell_module_at_wall_cells]: crate::cell#wall-cells
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub enum State {
     /// The wall cell does not empose a constraint on its neighbours.
     Unconstrained,
@@ -29,6 +32,7 @@ pub enum State {
 /// See [the module level documentation for more][cell_module_at_constraints].
 ///
 /// [cell_module_at_constraints]: crate::cell#constraints
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub enum Constraint {
     /// Neighbouring cells must contain an *exact* amount of lamps.
     ///
