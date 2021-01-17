@@ -92,6 +92,32 @@ impl State {
             Side::F => self.lit_from_f = true,
         }
     }
+
+    /// Registers that this cell is no longer lit up from a given [`Side`][side].
+    ///
+    /// [side]: crate::cell::Side
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Side};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.register_light_from(Side::A);
+    /// free_state.remove_light_from(Side::A);
+    ///
+    /// assert!(!free_state.is_lit_from(Side::A));
+    /// ```
+    pub fn remove_light_from(&mut self, side: Side) {
+        match side {
+            Side::A => self.lit_from_a = false,
+            Side::B => self.lit_from_b = false,
+            Side::C => self.lit_from_c = false,
+            Side::D => self.lit_from_d = false,
+            Side::E => self.lit_from_e = false,
+            Side::F => self.lit_from_f = false,
+        }
+    }
 }
 
 impl Default for State {
