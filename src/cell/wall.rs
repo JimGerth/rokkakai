@@ -40,6 +40,68 @@ pub enum Constraint {
     Equal(u8),
 }
 
+impl State {
+    /// Adds a [`Constraint`][constraint] to this cell.
+    ///
+    /// This method overrides any constraint previously set on this cell!
+    ///
+    /// [constraint]: crate::cell::Constraint
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.add_constraint(Constraint::Equal(2));
+    ///
+    /// assert!(matches!(wall_state, WallState::Constrained(Constraint::Equal(2))));
+    /// ```
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.add_constraint(Constraint::Equal(0));
+    /// wall_state.add_constraint(Constraint::Equal(2));
+    ///
+    /// assert!(matches!(wall_state, WallState::Constrained(Constraint::Equal(2))));
+    /// ```
+    pub fn add_constraint(&mut self, constraint: Constraint) {
+        *self = Self::Constrained(constraint);
+    }
+
+    /// Removes any [`Constraint`][constraint] from this cell.
+    ///
+    /// [constraint]: crate::cell::Constraint
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.add_constraint(Constraint::Equal(2));
+    /// wall_state.remove_constraint();
+    ///
+    /// assert!(matches!(wall_state, WallState::Unconstrained));
+    /// ```
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.remove_constraint();
+    /// wall_state.remove_constraint();
+    /// wall_state.remove_constraint();
+    ///
+    /// assert!(matches!(wall_state, WallState::Unconstrained));
+    /// ```
+    pub fn remove_constraint(&mut self) {
+        *self = Self::Unconstrained;
+    }
+}
+
 impl Default for State {
     /// Returns the state of an unconstrained wall cell.
     ///
