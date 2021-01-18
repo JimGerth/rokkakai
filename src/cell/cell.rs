@@ -1,5 +1,7 @@
 //! Internal module defining the `Cell` type.
 
+use serde::{Deserialize, Serialize};
+
 use super::free::State as FreeState;
 use super::wall::State as WallState;
 
@@ -10,6 +12,7 @@ use super::wall::State as WallState;
 ///
 /// [cell]: crate::cell::Cell
 /// [cell_module]: crate::cell#cells
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub enum Cell {
     /// A *free* game cell.
     /// All the free cell specific state is represented by [`FreeState`][free_state].
