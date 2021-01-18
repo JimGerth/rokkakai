@@ -73,6 +73,29 @@ pub enum Side {
 }
 
 impl Side {
+    /// Returns all of the possible sides.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::Side;
+    /// assert_eq!(Side::all(), &[Side::A, Side::B, Side::C, Side::D, Side::E, Side::F]);
+    /// ```
+    ///
+    /// Use this to iterate over all sides of a cell,
+    /// for example to update its neighbouring cells.
+    ///
+    /// ```
+    /// # use rokkakari::cell::Side;
+    /// for side in Side::all() {
+    ///     // Do something for each side.
+    ///     println!("{:?}", side); // Prints 'A' then 'B' and so on...
+    /// }
+    /// ```
+    pub fn all() -> &'static [Side; 6] {
+        &[Self::A, Self::B, Self::C, Self::D, Self::E, Self::F]
+    }
+
     /// Returns the opposite of a side.
     ///
     /// # Examples
