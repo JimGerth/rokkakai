@@ -118,6 +118,74 @@ impl State {
             Side::F => self.lit_from_f = false,
         }
     }
+
+    /// Adds a [`Marking`][marking] to this cell.
+    ///
+    /// This method *overrides* any previously set `Marking`!
+    ///
+    /// [marking]: crate::cell::Marking
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Lamp);
+    ///
+    /// assert!(free_state.has_lamp());
+    /// ```
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Cross);
+    /// free_state.add_marking(Marking::Lamp);
+    ///
+    /// assert!(free_state.has_lamp());
+    /// ```
+    pub fn add_marking(&mut self, marking: Marking) {
+        self.marking = Some(marking);
+    }
+
+    /// Returns the [`Marking`][marking] of this cell, if it has one.
+    ///
+    /// [marking]: crate::cell::Marking
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Cross);
+    /// let marking = free_state.get_marking().unwrap();
+    ///
+    /// assert_eq!(marking, Marking::Cross);
+    /// ```
+    pub fn get_marking(&self) -> Option<Marking> {
+        self.marking
+    }
+
+    /// Removes the current [`Marking`][marking] of this cell, if it has one.
+    ///
+    /// [marking]: crate::cell::Marking
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Cross);
+    /// free_state.remove_marking();
+    ///
+    /// assert_eq!(free_state.get_marking(), None);
+    /// ```
+    pub fn remove_marking(&mut self) {
+        self.marking = None;
+    }
 }
 
 impl Default for State {
