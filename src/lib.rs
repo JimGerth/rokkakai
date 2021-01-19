@@ -44,3 +44,4 @@
 //! [github_repo]: https://github.com/JimGerth/rokkakari
 
 pub mod cell;
+pub mod board;
