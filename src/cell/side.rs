@@ -56,7 +56,7 @@
 ///          D        *        C
 ///                                                                      D
 /// ```
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Side {
     #[allow(clippy::missing_docs_in_private_items)]
     A,
@@ -70,4 +70,56 @@ pub enum Side {
     E,
     #[allow(clippy::missing_docs_in_private_items)]
     F,
+}
+
+impl Side {
+    /// Returns all of the possible sides.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::Side;
+    /// assert_eq!(Side::all(), &[Side::A, Side::B, Side::C, Side::D, Side::E, Side::F]);
+    /// ```
+    ///
+    /// Use this to iterate over all sides of a cell,
+    /// for example to update its neighbouring cells.
+    ///
+    /// ```
+    /// # use rokkakari::cell::Side;
+    /// for side in Side::all() {
+    ///     // Do something for each side.
+    ///     println!("{:?}", side); // Prints 'A' then 'B' and so on...
+    /// }
+    /// ```
+    pub fn all() -> &'static [Side; 6] {
+        &[Self::A, Self::B, Self::C, Self::D, Self::E, Self::F]
+    }
+
+    /// Returns the opposite of a side.
+    ///
+    /// # Examples
+    ///
+    /// As seen above, the opposite side of `A` is `D`,
+    /// the opposite side of `B` is `E`, *and so on:*
+    ///
+    /// ```
+    /// # use rokkakari::cell::Side;
+    /// assert_eq!(Side::A.opposite(), Side::D);
+    /// assert_eq!(Side::B.opposite(), Side::E);
+    /// assert_eq!(Side::C.opposite(), Side::F);
+    /// assert_eq!(Side::D.opposite(), Side::A);
+    /// assert_eq!(Side::E.opposite(), Side::B);
+    /// assert_eq!(Side::F.opposite(), Side::C);
+    /// ```
+    pub fn opposite(&self) -> Side {
+        match self {
+            Self::A => Self::D,
+            Self::B => Self::E,
+            Self::C => Self::F,
+            Self::D => Self::A,
+            Self::E => Self::B,
+            Self::F => Self::C,
+        }
+    }
 }

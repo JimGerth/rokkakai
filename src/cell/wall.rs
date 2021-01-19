@@ -8,6 +8,7 @@
 ///
 /// [wall_cell]: crate::cell::Cell::Wall
 /// [cell_module_at_wall_cells]: crate::cell#wall-cells
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum State {
     /// The wall cell does not empose a constraint on its neighbours.
     Unconstrained,
@@ -29,6 +30,7 @@ pub enum State {
 /// See [the module level documentation for more][cell_module_at_constraints].
 ///
 /// [cell_module_at_constraints]: crate::cell#constraints
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Constraint {
     /// Neighbouring cells must contain an *exact* amount of lamps.
     ///
@@ -36,4 +38,80 @@ pub enum Constraint {
     /// light up each other the associated value has to be between
     /// `0` and `3` (inclusive).
     Equal(u8),
+}
+
+impl State {
+    /// Adds a [`Constraint`][constraint] to this cell.
+    ///
+    /// This method overrides any constraint previously set on this cell!
+    ///
+    /// [constraint]: crate::cell::Constraint
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.add_constraint(Constraint::Equal(2));
+    ///
+    /// assert!(matches!(wall_state, WallState::Constrained(Constraint::Equal(2))));
+    /// ```
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.add_constraint(Constraint::Equal(0));
+    /// wall_state.add_constraint(Constraint::Equal(2));
+    ///
+    /// assert!(matches!(wall_state, WallState::Constrained(Constraint::Equal(2))));
+    /// ```
+    pub fn add_constraint(&mut self, constraint: Constraint) {
+        *self = Self::Constrained(constraint);
+    }
+
+    /// Removes any [`Constraint`][constraint] from this cell.
+    ///
+    /// [constraint]: crate::cell::Constraint
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.add_constraint(Constraint::Equal(2));
+    /// wall_state.remove_constraint();
+    ///
+    /// assert!(matches!(wall_state, WallState::Unconstrained));
+    /// ```
+    ///
+    /// ```
+    /// # use rokkakari::cell::{Constraint, WallState};
+    /// let mut wall_state = WallState::default();
+    ///
+    /// wall_state.remove_constraint();
+    /// wall_state.remove_constraint();
+    /// wall_state.remove_constraint();
+    ///
+    /// assert!(matches!(wall_state, WallState::Unconstrained));
+    /// ```
+    pub fn remove_constraint(&mut self) {
+        *self = Self::Unconstrained;
+    }
+}
+
+impl Default for State {
+    /// Returns the state of an unconstrained wall cell.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::WallState;
+    /// assert_eq!(WallState::default(), WallState::Unconstrained);
+    /// ```
+    fn default() -> Self {
+        Self::Unconstrained
+    }
 }

@@ -1,5 +1,7 @@
 //! Internal module defining the state of a free cell.
 
+use super::side::Side;
+
 /// Represents the state of a *free* game cell.
 ///
 /// Used as the associated data in the [`Cell::Free`][free_cell] variant.
@@ -17,6 +19,7 @@
 /// [marking]: crate::cell::Marking
 /// [side]: crate::cell::Side
 /// [cell_module_at_free_cells]: crate::cell#free-cells
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct State {
     /// An optional [`Marking`] on the free cell.
     ///
@@ -43,13 +46,170 @@ pub struct State {
     lit_from_f: bool,
 }
 
+impl State {
+    /// Returns wether this cell is lit up from the given [`Side`][side].
+    ///
+    /// [side]: crate::cell::Side
+    pub fn is_lit_from(&self, side: Side) -> bool {
+        match side {
+            Side::A => self.lit_from_a,
+            Side::B => self.lit_from_b,
+            Side::C => self.lit_from_c,
+            Side::D => self.lit_from_d,
+            Side::E => self.lit_from_e,
+            Side::F => self.lit_from_f,
+        }
+    }
+
+    /// Returns wether this cell has a [`Lamp`][lamp] marking in it or not.
+    ///
+    /// [lamp]: crate::cell::Marking::Lamp
+    pub fn has_lamp(&self) -> bool {
+        matches!(self.marking, Some(Marking::Lamp))
+    }
+
+    /// Registers that a lamp lights up this cell from a given [`Side`][side].
+    ///
+    /// [side]: crate::cell::Side
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Side};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.register_light_from(Side::A);
+    ///
+    /// assert!(free_state.is_lit_from(Side::A));
+    /// ```
+    pub fn register_light_from(&mut self, side: Side) {
+        match side {
+            Side::A => self.lit_from_a = true,
+            Side::B => self.lit_from_b = true,
+            Side::C => self.lit_from_c = true,
+            Side::D => self.lit_from_d = true,
+            Side::E => self.lit_from_e = true,
+            Side::F => self.lit_from_f = true,
+        }
+    }
+
+    /// Registers that this cell is no longer lit up from a given [`Side`][side].
+    ///
+    /// [side]: crate::cell::Side
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Side};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.register_light_from(Side::A);
+    /// free_state.remove_light_from(Side::A);
+    ///
+    /// assert!(!free_state.is_lit_from(Side::A));
+    /// ```
+    pub fn remove_light_from(&mut self, side: Side) {
+        match side {
+            Side::A => self.lit_from_a = false,
+            Side::B => self.lit_from_b = false,
+            Side::C => self.lit_from_c = false,
+            Side::D => self.lit_from_d = false,
+            Side::E => self.lit_from_e = false,
+            Side::F => self.lit_from_f = false,
+        }
+    }
+
+    /// Adds a [`Marking`][marking] to this cell.
+    ///
+    /// This method *overrides* any previously set `Marking`!
+    ///
+    /// [marking]: crate::cell::Marking
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Lamp);
+    ///
+    /// assert!(free_state.has_lamp());
+    /// ```
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Cross);
+    /// free_state.add_marking(Marking::Lamp);
+    ///
+    /// assert!(free_state.has_lamp());
+    /// ```
+    pub fn add_marking(&mut self, marking: Marking) {
+        self.marking = Some(marking);
+    }
+
+    /// Returns the [`Marking`][marking] of this cell, if it has one.
+    ///
+    /// [marking]: crate::cell::Marking
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Cross);
+    /// let marking = free_state.get_marking().unwrap();
+    ///
+    /// assert_eq!(marking, Marking::Cross);
+    /// ```
+    pub fn get_marking(&self) -> Option<Marking> {
+        self.marking
+    }
+
+    /// Removes the current [`Marking`][marking] of this cell, if it has one.
+    ///
+    /// [marking]: crate::cell::Marking
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rokkakari::cell::{FreeState, Marking};
+    /// let mut free_state = FreeState::default();
+    ///
+    /// free_state.add_marking(Marking::Cross);
+    /// free_state.remove_marking();
+    ///
+    /// assert_eq!(free_state.get_marking(), None);
+    /// ```
+    pub fn remove_marking(&mut self) {
+        self.marking = None;
+    }
+}
+
+impl Default for State {
+    /// Returns the state of an empty unilluminated free cell.
+    fn default() -> Self {
+        Self {
+            marking: None,
+            lit_from_a: false,
+            lit_from_b: false,
+            lit_from_c: false,
+            lit_from_d: false,
+            lit_from_e: false,
+            lit_from_f: false,
+        }
+    }
+}
+
 /// The possible markings for *free* cells.
 ///
 /// See [the module level documentation for more][cell_module_at_free_cells].
 ///
 /// [free_cell]: crate::cell::Cell::Free
 /// [cell_module_at_free_cells]: crate::cell#free-cells
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Marking {
     /// A *lamp* placed in a free cell lights up other free cells in every
     /// direction.
